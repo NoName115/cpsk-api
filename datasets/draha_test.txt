@@ -1,0 +1,176 @@
+
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head><meta http-equiv="X-UA-Compatible" content="IE=9; IE=8" /><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><meta http-equiv="Cache-control" content="no-cache" /><meta http-equiv="Pragma" content="no-cache" /><meta name="keywords" content="idos,jízdní řády,doprava,vlaky,autobusy,mhd" /><meta name="robots" content="noindex, nofollow" /><meta name="googlebot" content="noindex, nofollow" /><meta http-equiv="imagetoolbar" content="no" /><meta name="author" content="CHAPS spol. s r.o." /><meta name="vs_defaultClientScript" content="JavaScript" /><meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" /><link rel="SHORTCUT ICON" href="/idos.ico" type="image/x-icon" /><title>
+	CP - Dráha spoja
+</title>
+	    <script type="text/javascript" src="/IdosResource.ashx?file=jquery-1.2.6.min.js&v=27600"></script>
+	    <script type="text/javascript" src="/IdosResource.ashx?file=Base.js&v=27600"></script>
+	    <script type="text/javascript" src="/IdosResource.ashx?file=Popup.js&v=27600"></script>
+	    
+<link rel="stylesheet" type="text/css" href="/IdosResource.ashx?file=css/content.css&v=27600" media="screen, projection" />
+<link rel="stylesheet" type="text/css" href="/IdosResource.ashx?file=css/layout.css&v=27600" media="screen, projection" />
+<link rel="stylesheet" type="text/css" href="/IdosResource.ashx?file=css/print.css&v=27600" media="print" />
+<link rel="stylesheet" type="text/css" href="/IdosResource.ashx?file=Portal/MAFRASK/Css/mafrask.css&v=27600" media="screen, projection" />
+
+
+<script type='text/javascript' >
+var sTimeOut='Dáta sa nepodarilo prevziať. Uplynul časový limit.\r\n(kód služby: HTTP'; var sNoData1='Dáta sa nepodarilo prevziať.\r\n'; var sNoData2='\r\n(kód služby: HTTP'; var sLoadingData='Načítavam dáta...'; var sNoAnswer='Požiadavka nebola na serveri spracovaná alebo sa nevrátila odpoveď.\r\nKeď sa bude podobná chyba opakovať, je server zaneprázdnený alebo mimo prevádzky, vyvolajte aplikáciu neskôr znovu.'; var sUncorectLoad='Stránku sa nepodarilo korektne načítať. Pred ďalšou akciou stránku obnovte.'; var sPageName='route.aspx';var sAppPath='/';var bUseISAPI=true;var sPortalLangDefault='SLOVAK';
+var goCombHistory = new CombHistory();var oBaseParams = new BaseParams('VlakBusMHDSk', 'vlakbusmhd', false, false, 'Vlaky + Autobusy + MHD');
+var sIDOSKey='cEcyT1hNbldBUFdvY3Y5NWhnL2V4UVlaVWsxdjRwUWRiM1hIekpBNlhDTT0-'; 
+var bIsAdvancedForm=false; 
+var sLineLabel='linky'; 
+var sLineLabel1='linka'; 
+var sMapLabel='Mapa'; 
+var asScript = new Array('sendmail.aspx', 'myconn.aspx', 'connsms.aspx', 'about.aspx', 'conn.aspx', 'dep.aspx', 'zjr.aspx', 'lines.aspx', 'connmore.aspx', 'delay.aspx', 'help.aspx', 'route.aspx', 'map.aspx', 'osj.aspx');
+var asUrl = new Array('email', 'mojespojenia', 'spojeniesms', 'cp', 'spojenie', 'odchody', 'zcp', 'spoje', 'detail', 'poloha', 'sepkar', 'draha', 'mapa', 'osj');
+
+var oDateLimit = new DateLimit(); 
+Calendar = function (){}; Calendar.prototype = {};function pageLoad(){
+  pageLoad_Route();
+}
+</script>
+ 
+</head>
+    <body id="popupbody" onload="LoadPopupPage();" >
+        
+         <div id="popfake-body">
+            <div class="popmother">
+                <div id="popmother-inner">
+                    <div class="head">
+                        
+                        <h2>Dráha spoja</h2>
+                        <a href="../layout/help.aspx?hp=main#route" id="ctl00_tophelp" class="r ico-help" onclick="return PopupOpen(event,&#39;help&#39;);" title="Šepkár">
+                            <span class="in1">
+                                <span id="ctl00_helptext" class="in2">Šepk&#225;r</span>
+                            </span>
+                        </a>
+                        <div class="break"></div>
+                    </div>
+                    <div class="body">
+                        <form name="aspnetForm" method="post" action="route.aspx?p=Kr1mQVwHP5XwS78NVrlf95PBvsTkA2PiNJM4GWID0E8:EpXIZDYAcFB6h0OaTiwC4N8fSDecT255nsBHJ6qCdH7CQ.N0Tx7Xvts.lUT6qYfsgXA37TS5ylUqRLthVyWCjiuv1MCG:gJJoMJbufICoA--" id="aspnetForm">
+<input type="hidden" name="__VIEWSTATEFIELDCOUNT" id="__VIEWSTATEFIELDCOUNT" value="2" />
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUKLTcyODE3NDg2Mg9kFgJmD2QWBgIBDxYGHgRocmVmBRdoZWxwLmFzcHg/aHA9bWFpbiNyb3V0ZR4Hb25jbGljawUfcmV0dXJuIFBvcHVwT3BlbihldmVudCwnaGVscCcpOx4FdGl0bGUFCMWgZXBrw6FyFgICAQ8WAh4JaW5uZXJodG1sBQzFoGVwayYjMjI1O3JkAgIPFgIeBmFjdGlvbgWlAXJvdXRlLmFzcHg/cD1LcjFtUVZ3SFA1WHdTNzhOVnJsZjk1UEJ2c1RrQTJQaU5KTTRHV0lEMEU4OkVwWElaRFlBY0ZCNmgwT2FUaXdDNE44ZlNEZWNUMjU1bnNCSEo2cUNkSDdDUS5OMFR4N1h2dHMubFVUNnFZZnNnWEEzN1RTNXlsVXFSTHRoVnlXQ2ppdXYxTUNHOmdKSm9NSmJ1ZklDb0EtLWQCAw9kFgJmD2QWCGYPFgQfAAXZAWphdmFzY3JpcHQ6UG9wVXBQcmludFdpbmRvdygncm91dGUuYXNweD9wPUtyMW1RVndIUDVYd1M3OE5WcmxmOTVQQnZzVGtBMlBpTkpNNEdXSUQwRTpkT3FSalNhQ3JtQWtra0ozQXBzc05XR28zaUhjM3dvaUt5TUYyc3pWclJHSTNJS2I3Sm5IMzB2eXJCSlFzQS5jbk1yamNiVVI2SUs5eFd3dXI0UzRVVHM2Q215Zk1RNVNqZFFOV0dCRGpzWk1IcVJPWjR1VkMzMTl2Z1pBdExiNC0nKTsfAwUKVnl0bGHEjWnFpWQCAQ8WBB8ABdcBamF2" />
+<input type="hidden" name="__VIEWSTATE1" id="__VIEWSTATE1" value="YXNjcmlwdDpQb3BVcFBERldpbmRvdygncm91dGUuYXNweD9wPUtyMW1RVndIUDVYd1M3OE5WcmxmOTVQQnZzVGtBMlBpTkpNNEdXSUQwRTpkT3FSalNhQ3JtQWtra0ozQXBzc05XR28zaUhjM3dvaUt5TUYyc3pWclJHSTNJS2I3Sm5IMzB2eXJCSlFzQS5jbk1yamNiVVI2SUs5eFd3dXI0UzRVVHM2Q215Zk1RNVNqZFFOV0dCRGpzWk1IcVJPWjR1VkMzMTl2Z1pBdExiNC0nKTsfAwUDUERGZAICDxYEHwAF4AFqYXZhc2NyaXB0OlBvcFVwTWFpbFdpbmRvdygnP3A9S3IxbVFWd0hQNVh3Uzc4TlZybGY5NVBCdnNUa0EyUGlOSk00R1dJRDBFOmRPcVJqU2FDcm1Ba2trSjNBcHNzTldHbzNpSGMzd29pS3lNRjJzelZyUkdJM0lLYjdKbkgzMHZ5ckJKUXNBLmNuTXJqY2JVUjZJSzl4V3d1cjRTNFVUczZDbXlmTVE1U2pkUU5XR0JEanNaTUhxUk9aNHVWQzMxOXZnWkF0TGI0LSZhbXA7cGc9cm91dGUuYXNweCcpOx8DBRBQb3NsYcWlIGUtbWFpbG9tZAIDDxYGHwMFCk5hc3RhdmVuaWUfAgURTmFzdGF2ZW5pZSB0bGHEjWUfAQU2amF2YXNjcmlwdDogU2hvd0hpZGVEaXYyKGV2ZW50LCAnUHJpbnRTZXR0aW5ncycsICc0Jyk7ZGThKCLZ1MMz6bQg6WPLmkclbKDsFg==" />
+
+<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="56990765" />
+                        
+    <div class="section"><div class="floatright routedate">19.11.2017</div><h3 title="rýchlik" class="routehead l"><span style="color:#FF0000" class="bold">R 608 Spišan</span> <img src="img/FC/082.gif" alt="do označených vozňov možno k cestovnému lístku zakúpiť miestenku" title="do označených vozňov možno k cestovnému lístku zakúpiť miestenku" width="14" height="14" /> <img src="img/FC/077.gif" alt="reštauračný alebo bistro vozeň" title="reštauračný alebo bistro vozeň" width="14" height="14" /> <img src="img/FC/186.gif" alt="v označených vozňoch je v cene cestovného bezdrôtové pripojenie k internetu" title="v označených vozňoch je v cene cestovného bezdrôtové pripojenie k internetu" width="20" height="14" /> <img src="img/FC/179.gif" alt="vo vlaku je radený vozeň s prípojkou 230 V" title="vo vlaku je radený vozeň s prípojkou 230 V" width="14" height="14" /> <img src="img/FC/174.gif" alt="vozeň alebo kupé vo vozni vyhradené pre cestujúcich s deťmi do 10 rokov" title="vozeň alebo kupé vo vozni vyhradené pre cestujúcich s deťmi do 10 rokov" width="14" height="14" /> <img src="img/FC/176.gif" alt="pojazdná úschovňa batožín, možnosť rezervácie miest pre bicykle" title="pojazdná úschovňa batožín, možnosť rezervácie miest pre bicykle" width="14" height="14" /> <img src="img/FC/178.gif" alt="zjednodušená preprava batožín, rozšírená preprava bicyklov - pod dohľadom cestujúceho s možnosťou rezervácie" title="zjednodušená preprava batožín, rozšírená preprava bicyklov - pod dohľadom cestujúceho s možnosťou rezervácie" width="14" height="14" /> <img src="img/FC/169.gif" alt="vo vlaku je radený vozeň so zdvíhacou plošinou a kupé na prepravu imobilných cestujúcich" title="vo vlaku je radený vozeň so zdvíhacou plošinou a kupé na prepravu imobilných cestujúcich" width="14" height="14" /> </h3><div class="break"></div><table class="results" border="0">
+	<thead>
+		<tr>
+			<th class="w5p">Stanica</th><th class="routew arr">Prích.</th><th class="routew">Odch.</th><th class="routew">Pozn.</th><th class="routew">Km</th><th>&nbsp;</th>
+		</tr>
+	</thead><tbody>
+		<tr class="routetrbold">
+			<td class="firstRouteDark">Košice </td><td class="right  arr">&nbsp;</td><td class="right">12:08</td><td class="right"></td><td class="right">0</td><td>&nbsp;</td>
+		</tr><tr class="routetr">
+			<td class="betweenRouteDark">Kysak </td><td class="right  arr">12:20</td><td class="right">12:22</td><td class="right"></td><td class="right">16</td><td>&nbsp;</td>
+		</tr><tr class="routetr">
+			<td class="betweenRouteDark">Margecany </td><td class="right  arr">12:36</td><td class="right">12:38</td><td class="right"></td><td class="right">35</td><td>&nbsp;</td>
+		</tr><tr class="routetr">
+			<td class="betweenRouteDark">Spišská Nová Ves </td><td class="right  arr">13:03</td><td class="right">13:05</td><td class="right"></td><td class="right">75</td><td>&nbsp;</td>
+		</tr><tr class="routetr">
+			<td class="betweenRouteDark">Poprad-Tatry </td><td class="right  arr">13:23</td><td class="right">13:25</td><td class="right"></td><td class="right">101</td><td>&nbsp;</td>
+		</tr><tr class="routetr">
+			<td class="betweenRouteDark">Štrba </td><td class="right  arr">13:40</td><td class="right">13:42</td><td class="right"></td><td class="right">120</td><td>&nbsp;</td>
+		</tr><tr class="routetr">
+			<td class="betweenRouteDark">Liptovský Mikuláš </td><td class="right  arr">14:08</td><td class="right">14:10</td><td class="right"></td><td class="right">159</td><td>&nbsp;</td>
+		</tr><tr class="routetr">
+			<td class="betweenRouteDark">Ružomberok </td><td class="right  arr">14:26</td><td class="right">14:28</td><td class="right"></td><td class="right">185</td><td>&nbsp;</td>
+		</tr><tr class="routetr">
+			<td class="betweenRouteDark">Kraľovany </td><td class="right  arr">14:43</td><td class="right">14:45</td><td class="right"></td><td class="right">203</td><td>&nbsp;</td>
+		</tr><tr class="routetr">
+			<td class="betweenRouteDark">Vrútky </td><td class="right  arr">14:57</td><td class="right">14:59</td><td class="right"></td><td class="right">221</td><td>&nbsp;</td>
+		</tr><tr class="routetr">
+			<td class="betweenRouteDark">Žilina </td><td class="right  arr">15:15</td><td class="right">15:19</td><td class="right"></td><td class="right">242</td><td>&nbsp;</td>
+		</tr><tr class="routetr">
+			<td class="betweenRouteDark">Považská Bystrica </td><td class="right  arr">15:52</td><td class="right">15:54</td><td class="right"></td><td class="right">274</td><td>&nbsp;</td>
+		</tr><tr class="routetr">
+			<td class="betweenRouteDark">Púchov </td><td class="right  arr">16:07</td><td class="right">16:09</td><td class="right"></td><td class="right">286</td><td>&nbsp;</td>
+		</tr><tr class="routetr">
+			<td colspan="6" class=" actstat dark"><span>Ďalšia stanica</span></td>
+		</tr><tr class="routetr">
+			<td class="betweenRouteDark">Trenčianska Teplá </td><td class="right  arr">16:25</td><td class="right">16:27</td><td class="right"></td><td class="right">313</td><td>&nbsp;</td>
+		</tr><tr class="routetr">
+			<td class="betweenRouteDark">Trenčín </td><td class="right  arr">16:33</td><td class="right">16:35</td><td class="right"></td><td class="right">321</td><td>&nbsp;</td>
+		</tr><tr class="routetr">
+			<td class="betweenRouteDark">Nové Mesto n.Váhom </td><td class="right  arr">16:52</td><td class="right">16:54</td><td class="right"></td><td class="right">346</td><td>&nbsp;</td>
+		</tr><tr class="routetr">
+			<td class="betweenRouteDark">Piešťany </td><td class="right  arr">17:05</td><td class="right">17:07</td><td class="right"></td><td class="right">364</td><td>&nbsp;</td>
+		</tr><tr class="routetr">
+			<td class="betweenRouteDark">Leopoldov </td><td class="right  arr">17:18</td><td class="right">17:20</td><td class="right"></td><td class="right">382</td><td>&nbsp;</td>
+		</tr><tr class="routetr">
+			<td class="betweenRouteDark">Trnava </td><td class="right  arr">17:32</td><td class="right">17:34</td><td class="right"></td><td class="right">399</td><td>&nbsp;</td>
+		</tr><tr class="routetr">
+			<td class="betweenRouteDark">Bratislava-Vinohrady </td><td class="right  arr">17:58</td><td class="right">17:59</td><td class="right"></td><td class="right">441</td><td>&nbsp;</td>
+		</tr><tr class="routetrbold">
+			<td class="lastRouteDark">Bratislava hl.st. </td><td class="right  arr">18:05</td><td class="right">&nbsp;</td><td class="right"></td><td class="right">445</td><td>&nbsp;</td>
+		</tr><tr>
+			<td colspan="6"><div class="trainposition-box"><div class="trainposition-head ico-info-blue">Poloha vlaku</div><div class="trainposition-body">Informácie zo stanice: Ladce<br />Aktuálne meškanie 8 minút<br /></div></div></td>
+		</tr><tr>
+			<td colspan="6"><div class="notes-det istrainpos"><ul><li class="ico-info-beige" title="Dopravca"><a href="http://www.slovakrail.sk" target="_blank">Železničná spoločnosť Slovensko, a.s.</a>; Rožňavská 1, 832 72 Bratislava 3; Informácie získate na čísle Kontaktného centra 18 188</li><li class="ico-info-blue" title="Informačná poznámka">reštauračný alebo bistro vozeň</li><li class="ico-info-blue" title="Informačná poznámka">do označených vozňov možno k cestovnému lístku zakúpiť miestenku</li><li class="ico-info-blue" title="Informačná poznámka">vozeň alebo kupé vo vozni vyhradené pre cestujúcich s deťmi do 10 rokov</li><li class="ico-info-blue" title="Informačná poznámka">vo vlaku je radený vozeň so zdvíhacou plošinou a kupé na prepravu imobilných cestujúcich</li><li class="ico-info-blue" title="Informačná poznámka">pojazdná úschovňa batožín, možnosť rezervácie miest pre bicykle</li><li class="ico-info-blue" title="Informačná poznámka">zjednodušená preprava batožín, rozšírená preprava bicyklov - pod dohľadom cestujúceho s možnosťou rezervácie</li><li class="ico-info-blue" title="Informačná poznámka">v označených vozňoch je v cene cestovného bezdrôtové pripojenie k internetu</li><li class="ico-info-blue" title="Informačná poznámka">možnosť prestupu smer Galanta (Bratislava-Vinohrady)</li><li class="ico-info-blue" title="Informačná poznámka">vo vlaku je radený vozeň s prípojkou 230 V</li></ul></div></td>
+		</tr>
+	</tbody>
+</table><div class="break"></div></div>
+
+                        </form>
+                        
+                            <div class="screen popbtns">
+                                <div id="ctl00_anchors" class="l popbtn">
+                                    <a href="javascript:PopUpPrintWindow('route.aspx?p=Kr1mQVwHP5XwS78NVrlf95PBvsTkA2PiNJM4GWID0E:dOqRjSaCrmAkkkJ3ApssNWGo3iHc3woiKyMF2szVrRGI3IKb7JnH30vyrBJQsA.cnMrjcbUR6IK9xWwur4S4UTs6CmyfMQ5SjdQNWGBDjsZMHqROZ4uVC319vgZAtLb4-');" id="ctl00_printanchor" class="ico-print m-textlink">Vytlačiť</a>
+                                    <a href="javascript:PopUpPDFWindow('route.aspx?p=Kr1mQVwHP5XwS78NVrlf95PBvsTkA2PiNJM4GWID0E:dOqRjSaCrmAkkkJ3ApssNWGo3iHc3woiKyMF2szVrRGI3IKb7JnH30vyrBJQsA.cnMrjcbUR6IK9xWwur4S4UTs6CmyfMQ5SjdQNWGBDjsZMHqROZ4uVC319vgZAtLb4-');" id="ctl00_printpdfanchor" class="ico-pdf m-textlink">PDF</a>
+                                    <a href="javascript:PopUpMailWindow('?p=Kr1mQVwHP5XwS78NVrlf95PBvsTkA2PiNJM4GWID0E:dOqRjSaCrmAkkkJ3ApssNWGo3iHc3woiKyMF2szVrRGI3IKb7JnH30vyrBJQsA.cnMrjcbUR6IK9xWwur4S4UTs6CmyfMQ5SjdQNWGBDjsZMHqROZ4uVC319vgZAtLb4-&amp;pg=route.aspx');" id="ctl00_mailanchor" class="ico-mail m-textlink">Poslať e-mailom</a>
+                                    <a href="javascript:void(0);" id="ctl00_settingsanchor" class="ico-settings m-textlink" title="Nastavenie tlače" onclick="javascript: ShowHideDiv2(event, &#39;PrintSettings&#39;, &#39;4&#39;);">Nastavenie</a>
+                                    
+                                </div>
+                                <div class="r popbtn">
+                                    <a class="btn-text-blue" title="Zavrieť okno" href="javascript:WClose();"><span class="iw">Zavrieť</span></a>
+                                </div>
+                                <div class="cb"></div>
+                            </div>
+                        
+                    </div>
+                    <div id="balloondiv" class="jr-popup hide"></div>
+                </div>
+            </div>
+        </div>
+        <div id="pagehourglass" class="ajax-loader">Načítavam dáta...</div>
+        
+<!-- start PageEnd -->
+<script type="text/javascript" src="/IdosResource.ashx?file=calendar%2fcalendar-slovak.js&v=27600"></script> 
+
+<script type="text/javascript">
+$(function() {if(window.pageLoad) pageLoad();});
+</script>
+<!-- end PageEnd -->
+        
+<!-- (C)2000-2016 Gemius SA - gemiusAudience / cp.sk / dCP -->
+<script type="text/javascript">
+    <!--//--><![CDATA[//><!--
+    var pp_gemius_identifier = '0stF1OOAmY3.bzDLXcWOyaP8.j6iTaLP05bJG7CDBjv.k7';
+    // lines below shouldn't be edited
+    function gemius_pending(i) { window[i] = window[i] || function() {var x = window[i+'_pdata'] = window[i+'_pdata'] || []; x[x.length]=arguments;};};
+    gemius_pending('gemius_hit'); gemius_pending('gemius_event'); gemius_pending('pp_gemius_hit'); gemius_pending('pp_gemius_event');
+    (function(d,t) {try {var gt=d.createElement(t),s=d.getElementsByTagName(t)[0],l='http'+((location.protocol=='https:')?'s':''); gt.setAttribute('async','async');
+        gt.setAttribute('defer','defer'); gt.src=l+'://gask.hit.gemius.pl/xgemius.js'; s.parentNode.insertBefore(gt,s);} catch (e) {}})(document,'script');
+    //--><!]]>
+</script>    
+<!-- (c) 2016 Gemius SA / gemiusHeatMap / mafrask -->
+<script type="text/javascript">
+    var ghmxy_type = 'percent';
+    var ghmxy_identifier = 'B8Lq_G7ov4NzRZOKTC2MafTX33kpmW7Q0aRQShvsnwj.97';
+    var ghmxy_hitcollector = 'ghmsk.hit.gemius.pl';
+</script>
+<script async type="text/javascript" src="https://ghmsk.hit.gemius.pl/hmapxy.js"></script>
+<!-- Global Site Tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-26248206-2"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-26248206-2');
+    gtag('config', 'UA-90225-23');
+</script>
+    </body>
+</html>
