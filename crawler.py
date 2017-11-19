@@ -10,6 +10,10 @@ cp_url_actual_datetime = "https://cp.hnonline.sk/{0}/spojenie/?f={1}&t={2}&direc
 #final_url = cp_url_with_datetime.format('vlak', '16.11.2017','15:00', 'Ko%c5%a1ice', 'Bratislava+hl.st.')
 final_url = cp_url_actual_datetime.format('vlak', 'Ko%c5%a1ice', 'Bratislava+hl.st.')
 
+final_url = "https://cp.hnonline.sk/vlak/spojenie/?date=19.11.2017&time=10%3a00&f=Ko%c5%a1ice&t=Bratislava+hl.st.&fc=100003&tc=100003&direct=true&submit=true"
+
+final_url = "https://cp.hnonline.sk/draha/?p=Kr1mQVwHP5XwS78NVrlf95PBvsTkA2PiNJM4GWID0E8:EpXIZDYAcFB6h0OaTiwC4N8fSDecT255nsBHJ6qCdH7CQ.N0Tx7Xvts.lUT6qYfsgXA37TS5ylUqRLthVyWCjiuv1MCG:gJJoMJbufICoA--"
+
 r = requests.get(final_url)
 #print(r.content)
 
