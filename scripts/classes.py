@@ -76,7 +76,7 @@ class Spojenie():
                 parsed_info.group(2).split()
             )
         else:
-            date_to = self.datetime_from.strftime("%d:%m")
+            date_to = self.datetime_from.strftime("%d.%m.")
             self.city_to, time_to, self.time_departure_to = self.resolve_time_and_city_to(
                 self.tr_list[2].text.split()
             )
@@ -216,7 +216,7 @@ class Saver():
 
     @staticmethod
     def check_link_directory(link):
-        path = datetime.now().date().strftime("%d.%m.%Y")
+        path = "../logs/" + datetime.now().date().strftime("%d.%m.%Y")
         # Create datetime folder
         if (not os.path.exists(path)):
             os.mkdir(path)

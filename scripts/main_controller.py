@@ -61,35 +61,41 @@ update_time = 5*60
 
 actual_links = {}
 while (1):
-    print("--------- START RESOLVE ---------")
-    #site_content = load_from_file_mainsite('output_0.txt')
+    try:
+        print("--------- START RESOLVE ---------")
+        #site_content = load_from_file_mainsite('output_0.txt')
 
-    site_content = download_actual_mainsite()
-    new_links = resolve_mainsite(site_content.decode('UTF-8'))
+        site_content = download_actual_mainsite()
+        new_links = resolve_mainsite(site_content.decode('UTF-8'))
 
-    for train_name, link_object in new_links.items():
-        if (train_name not in actual_links):
-            actual_links.update({
-                train_name: link_object
-            })
-            Saver.save_link_info(link_object)
-            print("Nove spojenie: " + train_name)
-        else:
-            # Already in dict
-            if (not actual_links[train_name].location_url):
-                actual_links[train_name].update_info(
-                    link_object
-                )
+        for train_name, link_object in new_links.items():
+            if (train_name not in actual_links):
+                actual_links.update({
+                    train_name: link_object
+                })
+                Saver.save_link_info(link_object)
+                print("Nove spojenie: " + train_name)
+            else:
+                # Already in dict
+                if (not actual_links[train_name].location_url):
+                    actual_links[train_name].update_info(
+                        link_object
+                    )
 
-    print("--------- DELAY RESOLVE ---------")
-    train_to_remove = set()
-    for train_name, link_object in actual_links.items():
-        link_object.resolve_delay()
-        if (link_object.datetime_to < datetime.now()):
-            train_to_remove.add(train_name)
+        print("--------- DELAY RESOLVE ---------")
+        train_to_remove = set()
+        for train_name, link_object in actual_links.items():
+            link_object.resolve_delay()
+            if (link_object.datetime_to < datetime.now()):
+                train_to_remove.add(train_name)
 
-    for tr_remove in train_to_remove:
-        actual_links.pop(tr_remove, None)
-        print('Train removed: ' + tr_remove)
+        for tr_remove in train_to_remove:
+            actual_links.pop(tr_remove, None)
+            print('Train removed: ' + tr_remove)
 
-    time.sleep(update_time)
+        time.sleep(update_time)
+
+    except Exception as err:
+        error_file = open("../logs/error_log.err", "a")
+        error_file.write(str(datetime.now()) + ": " + str(err) + "\n")
+        error_file.close()
