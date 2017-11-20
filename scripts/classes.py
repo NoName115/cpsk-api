@@ -201,7 +201,7 @@ class Spojenie():
         return_string += 'LOCATION URL:\t' + str(self.location_url) + "\n"
 
         delay_string = "\n"
-        for station_name, delay_object in self.delay_dict.items():
+        for delay_object in self.delay_list:
             delay_string += str(delay_object)
 
         return_string += delay_string
