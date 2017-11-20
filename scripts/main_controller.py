@@ -4,6 +4,9 @@ from datetime import datetime, timedelta
 import re
 import time
 import requests
+import os
+import sys
+
 
 cp_url_with_datetime = "https://cp.hnonline.sk/{0}/spojenie/?date={1}&time={2}&f={3}&t={4}&fc=100003&tc=100003&direct=true&submit=true"
 cp_url_actual_datetime = "https://cp.hnonline.sk/{0}/spojenie/?f={1}&t={2}&direct=true&submit=true"
@@ -70,6 +73,7 @@ def load_fewhours_back_mainsite(hours):
 
 
 update_time = 5*60
+site_content = ""
 
 # Nacitat predchadzajuce vlaky
 actual_links = load_fewhours_back_mainsite(6)
@@ -77,7 +81,7 @@ while (1):
     try:
         print("--------- START RESOLVE ---------")
         print("------ " + str(datetime.now()))
-        #site_content = load_from_file_mainsite('output_0.txt')
+        #site_content = load_from_file_mainsite('output_0.txt')        
 
         site_content = download_mainsite_with_datetime(
             datetime.now()
@@ -113,6 +117,17 @@ while (1):
 
     except Exception as err:
         error_file = open("../logs/error_log.err", "a")
-        error_file.write(str(datetime.now()) + ": " + str(err) + "\n")
+        exc_type, exc_obj, exc_tb = sys.exc_info()
+        fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+        error_file.write(
+            str(datetime.now()) + ": \n" +
+            "\t" + str(exc_type) + " " + str(fname) +
+            " " + str(exc_tb.tb_lineno) + "\n"
+        )
         error_file.close()
+
+        error_log = open("../logs/" + str(datetime.now()) + "_content.err", "a")
+        error_log.write(site_content.decode('UTF-8') + "\n\n")
+        error_log.close()
+
         time.sleep(update_time)
