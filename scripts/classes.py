@@ -1,10 +1,13 @@
 from bs4 import BeautifulSoup
-from datetime import datetime
+from datetime import datetime, timedelta
 import requests
 import json
 import re
 import os
 
+
+date_format = "%d.%m.%Y"
+time_format = "%H:%M"
 
 class Spojenie():
 
@@ -23,14 +26,24 @@ class Spojenie():
         self.route_url = ""
         self.location_url = ""
 
-        # Delay dictionary, key - station, value - Class delay
-        self.delay_dict = {}
+        # Delay list
+        self.delay_list = []
 
     def update_info(self, other_spojenie):
         self.route_url = other_spojenie.route_url
         self.location_url = other_spojenie.location_url
 
         Saver.save_link_info(self)
+
+    def get_actual_arrival(self):
+        if (self.delay_list):
+            last_delay = self.delay_list[-1].delay
+            actual_arrival = self.datetime_to + timedelta(
+                minutes=last_delay
+            )
+            return actual_arrival
+        else:
+            return self.datetime_to
 
     def resolve_main_data(self):
         self.resolve_first_tr()
@@ -59,7 +72,7 @@ class Spojenie():
             self.tr_list[1].find_all('a')
         )
         self.datetime_from = datetime.strptime(
-            date_from + "2017 " + time_from, "%d.%m.%Y %H:%M"
+            date_from + "2017 " + time_from, date_format + " " + time_format
         )
 
     def resolve_second_tr(self):
@@ -76,13 +89,13 @@ class Spojenie():
                 parsed_info.group(2).split()
             )
         else:
-            date_to = self.datetime_from.strftime("%d.%m.")
+            date_to = self.datetime_from.strftime(date_format[:-2])
             self.city_to, time_to, self.time_departure_to = self.resolve_time_and_city_to(
                 self.tr_list[2].text.split()
             )
 
         self.datetime_to = datetime.strptime(
-            date_to + "2017 " + time_to, "%d.%m.%Y %H:%M"
+            date_to + "2017 " + time_to, date_format + " " + time_format
         )
 
     def resolve_delay(self):
@@ -114,12 +127,11 @@ class Spojenie():
                 trim_list[0],
                 trim_list[1],
                 trim_list[2],
-                trim_list[3],
+                int(re.search(r'(\d+)', trim_list[3]).group()),
             )
-            self.delay_dict.update({
-                trim_list[0]: new_delay
-            })
+            self.delay_list.append(new_delay)
 
+            # Save delay data to CSV
             Saver.save_new_delay(self, new_delay)
 
     @staticmethod
@@ -207,8 +219,8 @@ class Delay():
 
     def __str__(self):
         return (
-            self.station_name + " " + self.regular_departure + "\n" +
-            self.actual_departure + "(" + self.delay + ")\n"
+            self.station_name + " " + str(self.regular_departure) + "\n" +
+            str(self.actual_departure) + "(" + str(self.delay) + ")\n"
         )
 
 
@@ -216,7 +228,7 @@ class Saver():
 
     @staticmethod
     def check_link_directory(link):
-        path = "../logs/" + datetime.now().date().strftime("%d.%m.%Y")
+        path = "../logs/" + link.datetime_to.strftime(date_format) #datetime.now().date().strftime("%d.%m.%Y")
         # Create datetime folder
         if (not os.path.exists(path)):
             os.mkdir(path)

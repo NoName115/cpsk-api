@@ -8,18 +8,16 @@ import requests
 cp_url_with_datetime = "https://cp.hnonline.sk/{0}/spojenie/?date={1}&time={2}&f={3}&t={4}&fc=100003&tc=100003&direct=true&submit=true"
 cp_url_actual_datetime = "https://cp.hnonline.sk/{0}/spojenie/?f={1}&t={2}&direct=true&submit=true"
 
-def download_actual_mainsite():
+def download_mainsite_with_datetime(input_datetime):
     station_from = 'Ko%c5%a1ice'
     station_to = 'Bratislava+hl.st.'
     transport = 'vlak'
 
-    actual_datetime = datetime.now() - timedelta(hours=1)
-
     # Download website
     final_url = cp_url_with_datetime.format(
         transport,
-        actual_datetime.strftime("%d.%m.%Y"),
-        actual_datetime.strftime("%H:%M"),
+        input_datetime.strftime("%d.%m.%Y"),
+        input_datetime.strftime("%H:%M"),
         station_from,
         station_to
     )
@@ -56,16 +54,34 @@ def resolve_mainsite(website_content):
     return all_links
 
 
-update_time = 5*60
-# Brat aktualny cas -1 hod.
+def load_fewhours_back_mainsite(hours):
+    all_links = {}
+    for i in range(hours, 0, -1):
+        site_content = download_mainsite_with_datetime(
+            datetime.now() - timedelta(hours=i)
+        )
+        new_links = resolve_mainsite(site_content.decode('UTF-8'))
+        for train_name, link_object in new_links.items():
+            if (train_name not in all_links):
+                all_links.update({
+                    train_name: link_object
+                })
+    return all_links
 
-actual_links = {}
+
+update_time = 5*60
+
+# Nacitat predchadzajuce vlaky
+actual_links = load_fewhours_back_mainsite(6)
 while (1):
     try:
         print("--------- START RESOLVE ---------")
+        print("------ " + str(datetime.now()))
         #site_content = load_from_file_mainsite('output_0.txt')
 
-        site_content = download_actual_mainsite()
+        site_content = download_mainsite_with_datetime(
+            datetime.now()
+        )
         new_links = resolve_mainsite(site_content.decode('UTF-8'))
 
         for train_name, link_object in new_links.items():
@@ -99,3 +115,4 @@ while (1):
         error_file = open("../logs/error_log.err", "a")
         error_file.write(str(datetime.now()) + ": " + str(err) + "\n")
         error_file.close()
+        time.sleep(update_time)
