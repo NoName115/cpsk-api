@@ -1,6 +1,8 @@
 from bs4 import BeautifulSoup
 from datetime import datetime, timedelta
+from classes import Link, Delay
 import requests
+import re
 
 
 date_format = "%d.%m.%Y"
@@ -10,40 +12,59 @@ class Resolver():
 
     url_with_datetime = "https://cp.hnonline.sk/{0}/spojenie/?date={1}&time={2}&f={3}&t={4}&fc=100003&tc=100003&direct=true&submit=true"
 
+    '''
     def __init__(self, station_f, station_t, trans='vlak'):
         self.trans = trans
         self.station_f = station_f
         self.station_t = station_t
+    '''
 
-    def create_url(self, in_datetime):
-        return self.url_with_datetime.format(
-            self.trans,
+    @staticmethod
+    def create_url(trans, station_f, station_t, in_datetime):
+        return Resolver.url_with_datetime.format(
+            trans,
             in_datetime.strftime("%d.%m.%Y"),
             in_datetime.strftime("%H:%M"),
-            self.station_f,
-            self.station_t
+            station_f,
+            station_t
         )
 
-    def resolve_mainsite_datetime(self, in_datetime):
-        url = self.create_url(in_datetime)
-        return self.__resolve_mainsite(url)
+    @staticmethod
+    def resolve_mainsite_datetime(station_f, station_t, in_datetime):
+        url = Resolver.create_url(
+            'vlak',
+            station_f,
+            station_t,
+            in_datetime
+        )
+        return Resolver.__resolve_mainsite(url)
 
-    def resolve_mainsite_now(self):
-        url = self.create_url(datetime.now())
-        return self.__resolve_mainsite(url)
+    @staticmethod
+    def resolve_mainsite_now(station_f, station_t):
+        url = Resolver.create_url(
+            'vlak',
+            station_f,
+            station_t,
+            datetime.now()
+        )
+        return Resolver.__resolve_mainsite(url)
 
-    def resolve_mainsite_minutesback(self, minutes):
+    @staticmethod
+    def resolve_mainsite_minutesback(station_f, station_t, minutes=0):
         minutes_back = abs(minutes)
-        url = self.create_url(
+        url = Resolver.create_url(
+            'vlak',
+            station_f,
+            station_t,
             datetime.now() - timedelta(minutes=minutes_back)
         )
-        return self.__resolve_mainsite(url)
+        return Resolver.__resolve_mainsite(url)
 
     @staticmethod
     def __resolve_mainsite(url):
         web_content = requests.get(url).content.decode('UTF-8')
 
-        print("RES: " + url)
+        print("RESOLVING: " + url)
 
         # Remove everything between
         # <!-- zobrazeni vysledku start --> & <!-- zobrazeni vysledku end-->
@@ -97,7 +118,9 @@ class Resolver():
 
         # Create new link
         new_link = Link()
-        new_link.train_name = " ".join(data_f[6].split('  ')[:-1]).strip()
+        new_link.train_name = " ".join(
+            data_f[6].split('  ')[:-1]
+        ).strip().replace('/', '')
         new_link.station_f = data_f[2].strip()
         new_link.station_t = data_t[2].strip()
         new_link.datetime_f = datetime.strptime(
@@ -133,19 +156,21 @@ class Resolver():
         root_link = 'https://cp.hnonline.sk'
         string_route = '/draha/'
         string_location = '/poloha/'
-        for link in href_list:
-            if (link.find(string_route) != -1):
-                route_url = root_link + link
-            elif (link.find(string_location) != -1):
-                location_url = root_link + link
+        for url_link in href_list:
+            if (url_link.find(string_route) != -1):
+                route_url = root_link + url_link
+            elif (url_link.find(string_location) != -1):
+                location_url = root_link + url_link
 
         return route_url, location_url
 
     @staticmethod
     def resolve_delay(link_object):
         if (not link_object.location_url):
-            print("No location_url")
+            print("No location_url: " + link_object.train_name)
             return None
+
+        print("Resolving: " + link_object.train_name)
 
         # Download web page
         web_content = requests.get(
@@ -157,7 +182,7 @@ class Resolver():
         trim_content = web_content[:web_content.find(remove_before)]
 
         soup_data = BeautifulSoup(trim_content, 'html.parser')
-        if (soup.table):
+        if (soup_data.table):
             data_list = list(filter(
                 None,
                 soup_data.table.text.split('\n')

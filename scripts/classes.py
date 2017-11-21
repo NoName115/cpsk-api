@@ -1,3 +1,7 @@
+from saver import Saver
+from datetime import timedelta
+
+
 date_format = "%d.%m.%Y"
 time_format = "%H:%M"
 
@@ -24,24 +28,34 @@ class Link():
         # Delays
         self.delays = []
 
+    def add_delay(self, new_delay):
+        if (not new_delay):
+            return
+        self.delays.append(new_delay)
+        Saver.save_next_delay(self, new_delay)
+
+    def get_real_datetime_t(self):
+        return self.datetime_t + timdelta(minutes=self.delays[-1]) \
+            if (self.delays) else self.datetime_t
+
     def get_route(self):
-        return (self.station_f + "-->" + slef.station_t)
+        return (self.station_f + "-->" + self.station_t)
 
     def get_json(self):
         json_dict = {
-            'train_name': str(link.train_name),
-            'station_from': str(link.station_f),
-            'station_to': str(link.station_t),
-            'datetime_from': link.datetime_from.strftime(
+            'train_name': str(self.train_name),
+            'station_from': str(self.station_f),
+            'station_to': str(self.station_t),
+            'datetime_from': self.datetime_f.strftime(
                 date_format + " " + time_format
             ),
-            'datetime_to': link.datetime_to.strftime(
+            'datetime_to': self.datetime_t.strftime(
                 date_format + " " + time_format
             ),
-            #'time_arrival_from': str(link.time_arrival_from),
-            #'time_departure_to': str(link.time_departure_to),
-            'route_url': str(link.route_url),
-            'location_url': str(link.location_url),
+            #'time_arrival_from': str(self.time_arrival_from),
+            #'time_departure_to': str(self.time_departure_to),
+            'route_url': str(self.route_url),
+            'location_url': str(self.location_url),
         }
         return json_dict
 
@@ -61,7 +75,7 @@ class Link():
         return_string += 'LOCATION URL:\t' + str(self.location_url) + "\n"
 
         delay_string = "\n"
-        for delay_object in self.delay_list:
+        for delay_object in self.delays:
             delay_string += str(delay_object)
 
         return_string += delay_string
@@ -79,6 +93,6 @@ class Delay():
 
     def __str__(self):
         return (
-            self.station_name + " " + str(self.regular_departure) + "\n" +
+            self.station_name + "  " + str(self.regular_departure) + " - " +
             str(self.actual_departure) + "(" + str(self.delay) + ")\n"
         )
