@@ -119,14 +119,14 @@ class Resolver():
         new_link.note_f = data_f[5]
         new_link.note_t = data_t[5]
 
-        new_link.route_url, new_link.location_url = Resolver.resolve_urls(
+        new_link.route_url, new_link.location_url = Resolver.__resolve_urls(
             [a.get('href') for a in tr_list[1].find_all('a')]
         )
 
         return new_link
 
     @staticmethod
-    def resolve_urls(href_list):
+    def __resolve_urls(href_list):
         route_url = ""
         location_url = ""
 
@@ -141,54 +141,49 @@ class Resolver():
 
         return route_url, location_url
 
+    @staticmethod
+    def resolve_delay(link_object):
+        if (not link_object.location_url):
+            print("No location_url")
+            return None
 
-class Link():
+        # Download web page
+        web_content = requests.get(
+            link_object.location_url
+        ).content.decode('UTF-8')
 
-    def __init__(self):
-        # Main data
-        self.train_name = ""
-        self.station_f = ""
-        self.station_t = ""
-        self.datetime_f = ""
-        self.datetime_t = ""
+        # Remove everything after <!-- start PageEnd -->
+        remove_before = '<!-- start PageEnd -->'
+        trim_content = web_content[:web_content.find(remove_before)]
 
-        # Info data
-        self.datetime_arrival_f = ""
-        self.datetime_departure_t = ""
-        self.note_f = ""
-        self.note_t = ""
+        soup_data = BeautifulSoup(trim_content, 'html.parser')
+        if (soup.table):
+            data_list = list(filter(
+                None,
+                soup_data.table.text.split('\n')
+            ))
+            trim_list = [item[item.find(":") + 1: ] for item in data_list]
 
-        # Urls
-        self.route_url = ""
-        self.location_url = ""
+            # Create delay class
+            new_delay = Delay(
+                trim_list[0],
+                datetime.strptime(
+                    link_object.datetime_f.strftime(
+                        date_format
+                    ) + trim_list[1],
+                    date_format + time_format
+                ),
+                datetime.strptime(
+                    trim_list[2],
+                    date_format + " " + time_format
+                ),
+                int(re.search(r'\d+', trim_list[3]).group())
+            )
+            return new_delay
+        else:
+            return None
 
-        # Delays
-        self.delays = []
-
-    def get_json(self):
-        pass
-
-    def get_string(self):
-        return str(self)
-
-    def __str__(self):
-        return_string = (
-            self.station_f +
-            " (" + str(self.datetime_f) + ")" +
-            " --> " + str(self.station_t) +
-            "(" + str(self.datetime_t) + ")\n"
-        )
-
-        return_string += "TRAIN:\t\t" + str(self.train_name) + "\n"
-        return_string += "ROUTE URL:\t" + str(self.route_url) + "\n"
-        return_string += 'LOCATION URL:\t' + str(self.location_url) + "\n"
-
-        '''
-        delay_string = "\n"
-        for delay_object in self.delay_list:
-            delay_string += str(delay_object)
-
-        return_string += delay_string
-        '''
-
-        return return_string
+        @staticmethod
+        def resolve_route(link_object):
+            # TODO
+            pass
