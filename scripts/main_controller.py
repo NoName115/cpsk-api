@@ -31,12 +31,12 @@ def resolve_few_hours_back(station_f, station_t, hours):
     return all_new_links
 
 
-update_time = 2*60
+update_time = 5*60
 actual_links = {}
 
-new_links = resolve_few_hours_back('Košice', 'Bratislava+hl.st.', 6)
+new_links = resolve_few_hours_back('Košice', 'Bratislava+hl.st.', 4)
 add_update_newlinks(actual_links, new_links)
-new_links = resolve_few_hours_back('Bratislava', 'Brno', 6)
+new_links = resolve_few_hours_back('Bratislava', 'Brno', 4)
 add_update_newlinks(actual_links, new_links)
 
 while (1):
@@ -82,7 +82,6 @@ while (1):
         time.sleep(update_time)
 
     except Exception as err:
-        raise
         print("--- ERROR ---")
 
         error_file = open("logs/error_log.err", "a")
