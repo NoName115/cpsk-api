@@ -170,7 +170,10 @@ class Resolver():
             print("No location_url: " + link_object.train_name)
             return None
 
-        print("Resolving: " + link_object.train_name)
+        print(
+            "Resolving: " + link_object.train_name +
+            " - " + link_object.location_url
+        )
 
         # Download web page
         web_content = requests.get(

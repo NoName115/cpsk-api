@@ -3,6 +3,7 @@ from datetime import datetime
 from saver import Saver
 import time
 import sys
+import os
 
 
 def print_links(all_links):
@@ -21,6 +22,7 @@ def add_update_newlinks(all_links, new_links):
             if (not all_links[train_name].location_url
                and link_object.location_url):
                 all_links[train_name].location_url = link_object.location_url
+                Saver.save_link_info(all_links[train_name])
                 print("Location_link update: " + train_name)
 
 def resolve_few_hours_back(station_f, station_t, hours):

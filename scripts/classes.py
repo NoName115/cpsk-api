@@ -35,7 +35,7 @@ class Link():
         Saver.save_next_delay(self, new_delay)
 
     def get_real_datetime_t(self):
-        return self.datetime_t + timedelta(minutes=self.delays[-1]) \
+        return self.datetime_t + timedelta(minutes=self.delays[-1].delay) \
             if (self.delays) else self.datetime_t
 
     def get_route(self):
