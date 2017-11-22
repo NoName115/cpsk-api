@@ -27,6 +27,8 @@ class Link():
 
         # Delays
         self.delays = []
+        # Route stops
+        self.route = []
 
     def add_delay(self, new_delay):
         if (not new_delay):
@@ -56,6 +58,9 @@ class Link():
             #'time_departure_to': str(self.time_departure_to),
             'route_url': str(self.route_url),
             'location_url': str(self.location_url),
+            'route': [
+                route_stop.get_json() for route_stop in self.route
+            ]
         }
         return json_dict
 
@@ -72,12 +77,19 @@ class Link():
 
         return_string += "TRAIN:\t\t" + str(self.train_name) + "\n"
         return_string += "ROUTE URL:\t" + str(self.route_url) + "\n"
-        return_string += 'LOCATION URL:\t' + str(self.location_url) + "\n"
+        return_string += "LOCATION URL:\t" + str(self.location_url) + "\n"
+        return_string += "ROUTE:\n"
 
-        delay_string = "\n"
+        route_string = ""
+        for route_stop in self.route:
+            route_string += "\t" + str(route_stop)
+        return_string += route_string
+
+        return_string += "DELAYS:\n"
+
+        delay_string = ""
         for delay_object in self.delays:
-            delay_string += str(delay_object)
-
+            delay_string += "\t" + str(delay_object)
         return_string += delay_string
 
         return return_string
@@ -96,3 +108,31 @@ class Delay():
             self.station_name + "  " + str(self.regular_departure) + " - " +
             str(self.actual_departure) + "(" + str(self.delay) + ")\n"
         )
+
+
+class RouteStop():
+
+    def __init__(self, station, time_arrival, time_departure, km):
+        self.station = station
+        self.time_arrival = time_arrival
+        self.time_departure = time_departure
+        self.km = km
+
+    def __str__(self):
+        return (
+            '{0:25} ({1:5} - {2:5}) {3:5}km\n'.format(
+                self.station,
+                str(self.time_arrival),
+                str(self.time_departure),
+                str(self.km)
+            )
+        )
+
+    def get_json(self):
+        json_dict = {
+            'station': self.station,
+            'time_arrival': self.time_arrival,
+            'time_departure': self.time_departure,
+            'km': self.km
+        }
+        return json_dict

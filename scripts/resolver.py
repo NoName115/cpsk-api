@@ -1,6 +1,6 @@
 from bs4 import BeautifulSoup
 from datetime import datetime, timedelta
-from classes import Link, Delay
+from classes import Link, Delay, RouteStop
 import requests
 import re
 
@@ -142,9 +142,12 @@ class Resolver():
         new_link.note_f = data_f[5]
         new_link.note_t = data_t[5]
 
+        # Resolve links
         new_link.route_url, new_link.location_url = Resolver.__resolve_urls(
             [a.get('href') for a in tr_list[1].find_all('a')]
         )
+        # Resolve 'draha' link
+        new_link.route = Resolver.__resolve_route(new_link)
 
         return new_link
 
@@ -211,7 +214,55 @@ class Resolver():
         else:
             return None
 
-        @staticmethod
-        def resolve_route(link_object):
-            # TODO
-            pass
+    @staticmethod
+    def __resolve_route(link_object):
+        if (not link_object.route_url):
+            print("No route_url: " + link_object.train_name)
+            return None
+
+        print(
+            "Resolve route: " + link_object.train_name +
+            " - " + link_object.route_url
+        )
+
+        # Download web page
+        web_content = requests.get(
+            link_object.route_url
+        ).content.decode('UTF-8')
+
+        # Remove everything after <!-- start PageEnd -->
+        remove_before = '<!-- start PageEnd -->'
+        trim_content = web_content[:web_content.find(remove_before)]
+
+        soup_data = BeautifulSoup(trim_content, 'html.parser')
+        if (soup_data.table):
+            stop_list = []
+            for tr in soup_data.table.find_all('tr'):
+                new_stop = Resolver.__resolve_stop(tr)
+                if (new_stop):
+                    stop_list.append(new_stop)
+
+            return stop_list
+        else:
+            return None
+
+    @staticmethod
+    def __resolve_stop(tr):
+        # 0 - station
+        # 1 - time_arrival
+        # 2 - time_departure
+        # 3 - note
+        # 4 - km
+        # 5 - ''
+        td_list = [
+            td.text.replace(u'\xa0', '') for td in tr.find_all('td')
+        ]
+        if (len(td_list) == 6):
+            return RouteStop(
+                td_list[0].strip(),
+                td_list[1],
+                td_list[2],
+                int(td_list[4])
+            )
+        else:
+            return None

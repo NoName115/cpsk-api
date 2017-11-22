@@ -79,6 +79,12 @@ while (1):
             new_delay = Resolver.resolve_delay(link_object)
             link_object.add_delay(new_delay)
 
+        '''
+        print("--------- CHECK PRINT ---------")
+        for train_name, link_object in actual_links.items():
+            print(link_object)
+        '''
+
         print("--------- DONE - SLEEP ---------")
         print("------ " + str(datetime.now()))
         time.sleep(update_time)
