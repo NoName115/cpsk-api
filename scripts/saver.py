@@ -1,3 +1,4 @@
+from unidecode import unidecode
 import json
 import csv
 import os
@@ -16,12 +17,12 @@ class Saver():
             os.mkdir(path)
         
         # Create route foler
-        path += "/" + link_object.get_route()
+        path += "/" + unidecode(link_object.get_route())
         if (not os.path.exists(path)):
             os.mkdir(path)
 
         # Create train_name folder
-        path += "/" + link_object.train_name
+        path += "/" + unidecode(link_object.train_name)
         if (not os.path.exists(path)):
             os.mkdir(path)
 

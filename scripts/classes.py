@@ -70,9 +70,6 @@ class Link():
         }
         return json_dict
 
-    def get_string(self):
-        return str(self)
-
     def __str__(self):
         return_string = (
             self.station_f +

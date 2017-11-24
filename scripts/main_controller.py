@@ -27,13 +27,6 @@ def add_update_newlinks(all_links, new_links):
                 Saver.save_link_info(actual_link)
                 print("Location_link update: " + train_name)
 
-            '''
-            if (not actual_link.is_route_resolved()):
-                actual_link.add_route(Resolver.resolve_route(actual_link))
-                Saver.save_link_info(actual_link)
-                print("Route_link update: " + train_name)
-            '''
-
 
 def resolve_few_hours_back(station_f, station_t, hours):
     all_new_links = {}

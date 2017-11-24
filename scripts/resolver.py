@@ -12,13 +12,6 @@ class Resolver():
 
     url_with_datetime = "https://cp.hnonline.sk/{0}/spojenie/?date={1}&time={2}&f={3}&t={4}&fc=100003&tc=100003&direct=true&submit=true"
 
-    '''
-    def __init__(self, station_f, station_t, trans='vlak'):
-        self.trans = trans
-        self.station_f = station_f
-        self.station_t = station_t
-    '''
-
     @staticmethod
     def create_url(trans, station_f, station_t, in_datetime):
         return Resolver.url_with_datetime.format(
@@ -146,8 +139,6 @@ class Resolver():
         new_link.route_url, new_link.location_url = Resolver.__resolve_urls(
             [a.get('href') for a in tr_list[1].find_all('a')]
         )
-        # Resolve 'draha' link
-        #new_link.route = Resolver.__resolve_route(new_link)
 
         return new_link
 
