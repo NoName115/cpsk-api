@@ -16,14 +16,24 @@ def add_update_newlinks(all_links, new_links):
             all_links.update({
                 train_name: link_object
             })
+            link_object.add_route(Resolver.resolve_route(link_object))
             Saver.save_link_info(link_object)
             print("Nove spojenie: " + train_name)
         else:
-            if (not all_links[train_name].location_url
+            actual_link = all_links[train_name]
+            if (not actual_link.location_url
                and link_object.location_url):
-                all_links[train_name].location_url = link_object.location_url
-                Saver.save_link_info(all_links[train_name])
+                actual_link.location_url = link_object.location_url
+                Saver.save_link_info(actual_link)
                 print("Location_link update: " + train_name)
+
+            '''
+            if (not actual_link.is_route_resolved()):
+                actual_link.add_route(Resolver.resolve_route(actual_link))
+                Saver.save_link_info(actual_link)
+                print("Route_link update: " + train_name)
+            '''
+
 
 def resolve_few_hours_back(station_f, station_t, hours):
     all_new_links = {}
@@ -36,7 +46,7 @@ def resolve_few_hours_back(station_f, station_t, hours):
 update_time = 5*60
 actual_links = {}
 
-new_links = resolve_few_hours_back('Košice', 'Bratislava+hl.st.', 4)
+new_links = resolve_few_hours_back('Košice', 'Bratislava+hl.st.', 6)
 add_update_newlinks(actual_links, new_links)
 new_links = resolve_few_hours_back('Bratislava', 'Brno', 4)
 add_update_newlinks(actual_links, new_links)

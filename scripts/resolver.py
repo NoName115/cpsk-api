@@ -147,7 +147,7 @@ class Resolver():
             [a.get('href') for a in tr_list[1].find_all('a')]
         )
         # Resolve 'draha' link
-        new_link.route = Resolver.__resolve_route(new_link)
+        #new_link.route = Resolver.__resolve_route(new_link)
 
         return new_link
 
@@ -185,7 +185,13 @@ class Resolver():
 
         # Remove everything after <!-- start PageEnd -->
         remove_before = '<!-- start PageEnd -->'
-        trim_content = web_content[:web_content.find(remove_before)]
+        remove_index = web_content.find(remove_before)
+        # Invalid index
+        if (remove_index == -1):
+            link_object.location_url = ""
+            return None
+
+        trim_content = web_content[:remove_index]
 
         soup_data = BeautifulSoup(trim_content, 'html.parser')
         if (soup_data.table):
@@ -194,6 +200,10 @@ class Resolver():
                 soup_data.table.text.split('\n')
             ))
             trim_list = [item[item.find(":") + 1: ] for item in data_list]
+            # Invalid input data
+            if (len(trim_list) != 4):
+                link_object.location_url = ""
+                return None
 
             # Create delay class
             new_delay = Delay(
@@ -215,10 +225,10 @@ class Resolver():
             return None
 
     @staticmethod
-    def __resolve_route(link_object):
+    def resolve_route(link_object):
         if (not link_object.route_url):
             print("No route_url: " + link_object.train_name)
-            return None
+            return []
 
         print(
             "Resolve route: " + link_object.train_name +
@@ -244,7 +254,7 @@ class Resolver():
 
             return stop_list
         else:
-            return None
+            return []
 
     @staticmethod
     def __resolve_stop(tr):

@@ -30,6 +30,9 @@ class Link():
         # Route stops
         self.route = []
 
+    def add_route(self, route_list):
+        self.route = route_list
+
     def add_delay(self, new_delay):
         if (not new_delay):
             return
@@ -39,6 +42,9 @@ class Link():
     def get_real_datetime_t(self):
         return self.datetime_t + timedelta(minutes=self.delays[-1].delay) \
             if (self.delays) else self.datetime_t
+
+    def is_route_resolved(self):
+        return self.route
 
     def get_route(self):
         return (self.station_f + "-->" + self.station_t)
